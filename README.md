@@ -58,7 +58,6 @@ Sinkronkan dependensi Gradle (Build -> Clean / Rebuild Project).
 Jalankan aplikasi via Emulator atau HP Android (Run ▶️).
 
 📸 Screenshot / Tampilan Aplikasi
-
-
+Screenshot tampilan aplikasi terlampir terpisah di repository ini, pada file SATU.jpeg sampai SEMBILAN.jpeg.
 
 Mata Kuliah Pemrograman Aplikasi Mobile (PAM)

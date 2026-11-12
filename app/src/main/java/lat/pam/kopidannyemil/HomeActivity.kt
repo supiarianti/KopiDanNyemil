@@ -2,73 +2,39 @@ package lat.pam.kopidannyemil
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var menuAdapter: MenuAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val btnProfile = findViewById<Button>(R.id.btnProfile)
-        val btnOrder = findViewById<Button>(R.id.btnOrder)
-        val btnHome = findViewById<Button>(R.id.btnHome)
+        // 1. Inisialisasi RecyclerView dari layout
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
+        // 2. Siapkan data list menu makanan & minuman
         val menuList = listOf(
-            Menu(
-                "Kopi Susu Gula Aren",
-                "Espresso, susu, gula aren",
-                "Rp22.000"
-            ),
-            Menu(
-                "Donat Cokelat",
-                "Donat empuk glaze cokelat",
-                "Rp12.000"
-            ),
-            Menu(
-                "Sourdough Loaf",
-                "Roti fermentasi alami",
-                "Rp35.000"
-            ),
-            Menu(
-                "Cappuccino",
-                "Espresso, foam susu lembut",
-                "Rp25.000"
-            ),
-            Menu(
-                "Matcha Latte",
-                "Matcha jepang, susu segar",
-                "Rp27.000"
-            )
+            Menu("Kopi Susu Gula Aren", "Espresso dengan fresh milk dan gula aren asli.", "Rp 18.000", R.drawable.ic_launcher_foreground),
+            Menu("Thai Green Tea", "Teh hijau khas Thailand yang creamy & segar.", "Rp 15.000", R.drawable.ic_launcher_foreground),
+            Menu("Basreng Si Madu", "Bakso goreng renyah dengan bumbu pedas gurih.", "Rp 12.000", R.drawable.ic_launcher_foreground),
+            Menu("Kue Pancong Lumer", "Kue pancong tradisional dengan lumeran cokelat.", "Rp 10.000", R.drawable.ic_launcher_foreground)
         )
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = MenuAdapter(menuList)
-
-        btnProfile.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    ProfileActivity::class.java
-                )
-            )
+        // 3. Pasang Adapter dan Intent ke OrderActivity saat item diklik
+        menuAdapter = MenuAdapter(menuList) { selectedMenu ->
+            val intent = Intent(this, OrderActivity::class.java).apply {
+                putExtra("EXTRA_MENU_NAME", selectedMenu.name)
+                putExtra("EXTRA_MENU_PRICE", selectedMenu.price)
+            }
+            startActivity(intent)
         }
 
-        btnOrder.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    OrderActivity::class.java
-                )
-            )
-        }
-
-        btnHome.setOnClickListener {
-            // Sudah berada di Home, opsional dikosongkan atau Refresh
-        }
+        recyclerView.adapter = menuAdapter
     }
 }

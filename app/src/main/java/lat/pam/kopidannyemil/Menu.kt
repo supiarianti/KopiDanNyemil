@@ -1,7 +1,8 @@
 package lat.pam.kopidannyemil
 
 data class Menu(
-    val nama: String,
-    val deskripsi: String,
-    val harga: String
+    val name: String,
+    val description: String,
+    val price: String,
+    val imageResource: Int
 )
